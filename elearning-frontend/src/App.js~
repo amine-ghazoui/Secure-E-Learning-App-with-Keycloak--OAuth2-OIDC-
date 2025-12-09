@@ -1,0 +1,102 @@
+import React, { useState, useEffect } from 'react';
+import keycloak from './keycloak';
+import { getUserInfo } from './services/api';
+import Navbar from './components/Navbar';
+import Profile from './components/Profile';
+import CoursesList from './components/CoursesList';
+import AdminPanel from './components/AdminPanel';
+import './App.css';
+
+function App() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [refreshCourses, setRefreshCourses] = useState(0);
+
+  useEffect(() => {
+    keycloak
+        .init({
+          onLoad: 'login-required',
+          checkLoginIframe: false
+        })
+        .then((auth) => {
+          setAuthenticated(auth);
+          if (auth) {
+            fetchUserInfo();
+
+            // Rafraîchir le token automatiquement
+            setInterval(() => {
+              keycloak.updateToken(30).catch(() => {
+                console.error('Token refresh failed');
+                keycloak.login();
+              });
+            }, 30000);
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error('Keycloak initialization failed', error);
+          setLoading(false);
+        });
+  }, []);
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await getUserInfo();
+      setUserInfo(response.data);
+      console.log('User Info:', response.data);
+    } catch (error) {
+      console.error('Error fetching user info:', error);
+    }
+  };
+
+  const isAdmin = () => {
+    return userInfo?.roles?.includes('ROLE_ADMIN');
+  };
+
+  const handleCourseAdded = () => {
+    setRefreshCourses(prev => prev + 1);
+  };
+
+  if (loading) {
+    return (
+
+
+        Chargement de l'application...
+
+  );
+  }
+
+  if (!authenticated) {
+    return (
+
+        Non authentifié. Redirection vers la page de connexion...
+
+  );
+  }
+
+  return (
+
+
+
+
+
+
+
+
+      {isAdmin() && (
+
+      )}
+
+  {!isAdmin() && (
+
+      ℹ️ Vous êtes connecté en tant qu'étudiant.
+    Le panneau d'administration n'est pas disponible.
+
+  )}
+
+
+);
+}
+
+export default App;

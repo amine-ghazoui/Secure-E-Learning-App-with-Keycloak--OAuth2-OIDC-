@@ -1,0 +1,58 @@
+package org.ghazoui.securityoath2oidcapp.controller;
+
+import com.elearning.backend.dto.UserInfoDTO;
+import com.elearning.backend.model.Course;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
+public class CourseController {
+
+    private List courses = new ArrayList<>(List.of(
+            new Course(1L, "Spring Boot Fundamentals", "Learn Spring Boot from scratch", "John Doe"),
+            new Course(2L, "React for Beginners", "Build modern web apps with React", "Jane Smith"),
+            new Course(3L, "OAuth2 & Security", "Master OAuth2 and OpenID Connect", "Bob Johnson")
+    ));
+
+    @GetMapping("/courses")
+    @PreAuthorize("hasAnyAuthority('ROLE_STUDENT', 'ROLE_ADMIN')")
+    public ResponseEntity<List> getCourses() {
+        return ResponseEntity.ok(courses);
+    }
+
+    @PostMapping("/courses")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity addCourse(@RequestBody Course course) {
+        course.setId((long) (courses.size() + 1));
+        courses.add(course);
+        return ResponseEntity.ok(course);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity getUserInfo(Authentication authentication) {
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+
+        UserInfoDTO userInfo = new UserInfoDTO();
+        userInfo.setUsername(jwt.getClaim("preferred_username"));
+        userInfo.setEmail(jwt.getClaim("email"));
+        userInfo.setFirstName(jwt.getClaim("given_name"));
+        userInfo.setLastName(jwt.getClaim("family_name"));
+
+        List roles = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+        userInfo.setRoles(roles);
+
+        return ResponseEntity.ok(userInfo);
+    }
+}
