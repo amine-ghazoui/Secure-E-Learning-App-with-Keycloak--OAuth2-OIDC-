@@ -106,117 +106,21 @@ npm start
 ### 2. Application React
 
 #### Page de connexion Keycloak
+<img width="1473" height="753" alt="page-de-connexion" src="https://github.com/user-attachments/assets/ff637630-57ee-42a8-a36e-887ce9079caa" />
 *Page d'authentification Keycloak*
 
 #### Profil utilisateur (Student)
-![Student Profile](./screenshots/06-student-profile.png)
+<img width="1879" height="865" alt="Capture d&#39;écran 2025-12-08 224224" src="https://github.com/user-attachments/assets/534907e3-7b1d-40d2-afbd-4a5502e588fb" />
 *Profil de user1 avec rôle ROLE_STUDENT*
 
-#### Liste des cours
-![Courses List](./screenshots/07-courses-list.png)
-*Liste des cours disponibles*
-
 #### Panneau Admin
-![Admin Panel](./screenshots/08-admin-panel.png)
+<img width="1873" height="861" alt="Capture d&#39;écran 2025-12-08 224305" src="https://github.com/user-attachments/assets/a7ccc161-7800-43f3-a5d0-0a7f8a1c95e8" />
+
 *Panneau d'administration (visible uniquement pour admin)*
 
 #### Ajout de cours (Admin)
-![Add Course](./screenshots/09-add-course.png)
+<img width="1891" height="656" alt="Capture d&#39;écran 2025-12-08 224322" src="https://github.com/user-attachments/assets/030fe550-8742-4b71-b93d-83c6b06e33d3" />
 *Formulaire d'ajout de cours*
-
-### 3. Tests API avec Postman
-
-#### Token Student
-![Student Token](./screenshots/10-postman-student-token.png)
-*Obtention du token pour user1*
-
-#### GET /courses - Autorisé
-![GET Courses Success](./screenshots/11-get-courses-success.png)
-*GET /courses avec token student - 200 OK*
-
-#### POST /courses - Refusé (Student)
-![POST Refused Student](./screenshots/12-post-refused-student.png)
-*POST /courses avec token student - 403 Forbidden*
-
-#### Token Admin
-![Admin Token](./screenshots/13-postman-admin-token.png)
-*Obtention du token pour admin1*
-
-#### POST /courses - Autorisé (Admin)
-![POST Success Admin](./screenshots/14-post-success-admin.png)
-*POST /courses avec token admin - 200 OK*
-
-#### GET /me - User Info
-![User Info](./screenshots/15-get-me-userinfo.png)
-*Endpoint /me affichant les informations et rôles*
-
-## 🧪 Tests
-
-### Tests manuels avec Postman
-
-#### 1. Obtenir un token
-
-```http
-POST http://localhost:8080/realms/elearning-realm/protocol/openid-connect/token
-Content-Type: application/x-www-form-urlencoded
-
-grant_type=password
-&client_id=react-client
-&username=user1
-&password=password
-```
-
-#### 2. Tester GET /courses
-
-```http
-GET http://localhost:8081/api/courses
-Authorization: Bearer {votre_token}
-```
-
-**Résultat attendu** : 200 OK
-
-#### 3. Tester POST /courses (Student)
-
-```http
-POST http://localhost:8081/api/courses
-Authorization: Bearer {token_student}
-Content-Type: application/json
-
-{
-  "title": "Nouveau Cours",
-  "description": "Description du cours",
-  "instructor": "Instructeur"
-}
-```
-
-**Résultat attendu** : 403 Forbidden
-
-#### 4. Tester POST /courses (Admin)
-
-```http
-POST http://localhost:8081/api/courses
-Authorization: Bearer {token_admin}
-Content-Type: application/json
-
-{
-  "title": "Nouveau Cours",
-  "description": "Description du cours",
-  "instructor": "Instructeur"
-}
-```
-
-**Résultat attendu** : 200 OK
-
-### Scénarios de test
-
-- ✅ Connexion réussie avec user1
-- ✅ Affichage du profil utilisateur
-- ✅ Consultation des cours (Student & Admin)
-- ✅ Ajout de cours autorisé (Admin uniquement)
-- ✅ Ajout de cours refusé (Student)
-- ✅ Déconnexion fonctionnelle
-- ✅ Refresh automatique du token
-- ✅ Gestion des erreurs 401/403
 
 ## 📁 Structure du projet
 
@@ -285,17 +189,3 @@ elearning-oauth2/
 | GET    | /api/courses | STUDENT, ADMIN | Liste des cours |
 | POST   | /api/courses | ADMIN | Ajouter un cours |
 | GET    | /api/me | Authentifié | Informations utilisateur |
-
-## 👤 Auteur
-
-**Votre Nom**
-- GitHub: [@votre-username](https://github.com/votre-username)
-- Email: votre.email@example.com
-
-## 📄 Licence
-
-Ce projet est réalisé dans le cadre d'un TP académique.
-
----
-
-⭐ **N'oubliez pas de star ce repo si vous l'avez trouvé utile !**
