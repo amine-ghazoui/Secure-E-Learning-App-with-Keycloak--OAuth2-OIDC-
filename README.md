@@ -164,7 +164,7 @@ elearning-oauth2/
 - Refresh automatique des tokens
 - CORS configuré pour sécuriser les appels API
 
-## 🐛 Dépannage
+##  Dépannage
 
 ### Erreur CORS
 - Vérifiez la configuration CORS dans `SecurityConfig.java`
