@@ -1,17 +1,17 @@
-# 🎓 E-Learning Platform - OAuth2 & OpenID Connect
+#  E-Learning Platform - OAuth2 & OpenID Connect
 
 Plateforme d'apprentissage en ligne sécurisée avec authentification OAuth2/OIDC utilisant Keycloak, Spring Boot et React.
 
 
 
-## 🛠️ Technologies utilisées
+##  Technologies utilisées
 
 - **Serveur d'identité** : Keycloak 
 - **Backend** : Spring Boot, Spring Security, OAuth2 Resource Server
 - **Frontend** : React, Keycloak-js, Axios
 - **Sécurité** : OAuth2, OpenID Connect, JWT
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ┌─────────────┐      ┌─────────────┐      ┌─────────────┐
@@ -28,7 +28,7 @@ Plateforme d'apprentissage en ligne sécurisée avec authentification OAuth2/OID
      └──────────── Secured API Calls ───────────┘
 ```
 
-## ⚙️ Configuration
+##  Configuration
 
 ### Keycloak Configuration
 
@@ -64,7 +64,7 @@ const keycloak = new Keycloak({
 });
 ```
 
-## 🚀 Utilisation
+##  Utilisation
 
 ### Démarrer l'application
 
@@ -99,7 +99,7 @@ npm start
 | user1    | password | STUDENT | Consulter les cours |
 | admin1   | password | ADMIN | Consulter et gérer les cours |
 
-## 📸 Captures d'écran
+##  Captures d'écran
 
 ### 1. Configuration Keycloak
 
@@ -122,7 +122,7 @@ npm start
 <img width="1891" height="656" alt="Capture d&#39;écran 2025-12-08 224322" src="https://github.com/user-attachments/assets/030fe550-8742-4b71-b93d-83c6b06e33d3" />
 *Formulaire d'ajout de cours*
 
-## 📁 Structure du projet
+##  Structure du projet
 
 ```
 elearning-oauth2/
@@ -155,7 +155,7 @@ elearning-oauth2/
 └── README.md
 ```
 
-## 🔒 Sécurité
+##  Sécurité
 
 - Authentification via OAuth2 + OpenID Connect
 - Tokens JWT signés par Keycloak
@@ -182,7 +182,7 @@ elearning-oauth2/
 - Ouvrez la console (F12) pour voir les erreurs
 - Vérifiez que tous les services sont démarrés
 
-## 📝 Endpoints API
+##  Endpoints API
 
 | Method | Endpoint | Rôle requis | Description |
 |--------|----------|-------------|-------------|
